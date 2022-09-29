@@ -1,4 +1,4 @@
-let str = "$[createvar] name : flaming < \"\"$/\n$[createvar] age : bozo < \"\" $"
+let str = "$[createvar] name : flaming < \"\"$/\n$[editval] myname->first ; chronny < \"\" $"
 let strs = str.split('$/')
 
 strs.forEach((s, i) => strs[i] = i==strs.length-1?strs[i]:strs[i] + "$")
@@ -29,40 +29,65 @@ console.log(codeblocks)
 //prolly will go in another file
 let memory = {}
 memory.variables = {}
+memory.variables.myname = {}
+memory.variables.myname.first = 'yo'
 
 for (let block in codeblocks){
     let blocktxt = codeblocks[block].str
-    if (codeblocks[block].type = 'createvar') {
-        const validDataTypesSym  = ['\"\"', '09', '01', '[]', '{}', '(=>)']
-        const validDataTypesStr = ['string', 'number', 'boolean', 'array', 'object', 'function']
         
+    let datatypeSym = blocktxt.substring(
+        blocktxt.lastIndexOf("<") + 1,
+            blocktxt.lastIndexOf(";")
+    ).trim()
+    let decl = blocktxt.slice(0, blocktxt.lastIndexOf('<'))
         
-        const validDataTypes = new Map()
+        console.log(codeblocks[block].type)
+    if (codeblocks[block].type == 'createvar') {
+        if (!decl.includes(':')) return console.error('syntax error')
+        let declPos = decl.lastIndexOf(':')
+        
+        let varName = decl.slice(0, declPos).trim()
+        let value = decl.slice(declPos+1).trim()
+        value = dataParse(value, datatypeSym)
+        
+        memory.variables[varName] = value
+    }
+    else if (codeblocks[block].type == 'editval') {
+        if (!decl.includes(';')) return console.error('syntax error')
+        let declPos = decl.lastIndexOf(';')
+        
+        let varName = decl.slice(0, declPos).trim()
+        let value = decl.slice(declPos+1).trim()
+        value = dataParse(value, datatypeSym)
+        
+        varPath = varName.split('->').map(e => { return e.trim() })
+        
+        pathIndex(memory.variables, varPath, value)
+    }
+}
+console.log(memory)
+
+function dataParse (value, sym) {
+    const validDataTypesSym  = ['\"\"', '09', '01', '[]', '{}', '(=>)']
+    const validDataTypesStr = ['string', 'number', 'boolean', 'array', 'object', 'function']
+    
+    const validDataTypes = new Map()
         validDataTypesSym.forEach((sym, i) => validDataTypes.set(sym, validDataTypesStr[i]))
         
-        let datatypeSym = blocktxt.substring(
-            blocktxt.lastIndexOf("<") + 1,
-            blocktxt.lastIndexOf(";")
-        ).trim()
-        if (!validDataTypesSym.includes(datatypeSym)) return console.error('wrong datatype lol')
-        let decl = blocktxt.replace(/\<.*\;/, '').trim()
-        
-        let varName = decl.split(':')[0].trim()
-        let value = decl.split(':')[1].trim()
-        
-        let datatype = validDataTypes.get(datatypeSym)
-        
-        if (datatype == 'string') value = value.toString()
-        if (datatype == 'number') {
-            value = Number(value)
-            if (isNaN(value)) return console.error('datatype error')
+    let datatype = validDataTypes.get(sym)
+    if (!validDataTypesSym.includes(sym)) return console.error('wrong datatype lol')
+    let parse
+    if (datatype == 'string') parse = value.toString()
+    if (datatype == 'number') {
+        parse = Number(value)
+    if (isNaN(parse)) return console.error('datatype error')
         }
-        if (datatype == 'boolean') {
-            if (value == '0' || value == 'false') value = false
-            if (value == '1' || value == 'true') value = true
-            else console.error('datatype error')
+    if (datatype == 'boolean') {
+        if (value == '0' || value == 'false') parse = false
+        if (value == '1' || value == 'true') parse = true
+        else console.error('datatype error')
         }
-        if (datatype == 'array') value = value.split(',')
+        if (datatype == 'array') parse = value.split(',')
         if (datatype == 'object') {
             let obj = {}
             value.split(',').forEach(e => {
@@ -70,14 +95,17 @@ for (let block in codeblocks){
                     let key = e.split('-')[0]
                     let val = e.split('-')[1]
                     obj[key] = val
-                }
-            })
-            value = obj
-        }
-        memory.variables[varName] = value
+            }
+        })
+        parse = obj
     }
-    else if (codeblocks[block].type == 'editval') {
-        
-    }
+    return parse
 }
-console.log(memory)
+
+function pathIndex (obj,is, value) {
+    console.log(obj[is[0]])
+    if (is.length==0) return
+    if (obj[is[0]] !== undefined) pathIndex(obj[is[0]],is.slice(1), value);
+    else return console.error(`${is[0]} is undefined property`)
+    if (is.length==1) return obj[is[0]] = value;
+}
