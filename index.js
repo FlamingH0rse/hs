@@ -1,4 +1,11 @@
-let s = "my cow gives ass milk"
-var result = s.match(/(?<=cow\s+).*?(?=\s+milk)/gs);
+let str = "$ hi $/\n$ bye $"
+let strs = str.split('/')
 
-console.log(result)
+let codeblocks = []
+for (let line in strs) {
+    codeblocks[line] = strs[line].substring(
+        strs[line].indexOf("$") + 1, 
+        strs[line].lastIndexOf("$")
+    ).trim()
+}
+console.log(codeblocks)
