@@ -1,4 +1,4 @@
-let str = "$[createvar] name : flaming < \"\"$/\n$[editval] myname->first ; chronny < \"\" $"
+let str = "$[createvar] name : flaming < \"\"$/\n$[editval] name ; chronny < \"\" $"
 let strs = str.split('$/')
 
 strs.forEach((s, i) => strs[i] = i==strs.length-1?strs[i]:strs[i] + "$")
@@ -29,8 +29,6 @@ console.log(codeblocks)
 //prolly will go in another file
 let memory = {}
 memory.variables = {}
-memory.variables.myname = {}
-memory.variables.myname.first = 'yo'
 
 for (let block in codeblocks){
     let blocktxt = codeblocks[block].str
