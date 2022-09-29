@@ -38,8 +38,7 @@ for (let block in codeblocks){
             blocktxt.lastIndexOf(";")
     ).trim()
     let decl = blocktxt.slice(0, blocktxt.lastIndexOf('<'))
-        
-        console.log(codeblocks[block].type)
+    
     if (codeblocks[block].type == 'createvar') {
         if (!decl.includes(':')) return console.error('syntax error')
         let declPos = decl.lastIndexOf(':')
@@ -101,7 +100,6 @@ function dataParse (value, sym) {
 }
 
 function pathIndex (obj,is, value) {
-    console.log(obj[is[0]])
     if (is.length==0) return
     if (obj[is[0]] !== undefined) pathIndex(obj[is[0]],is.slice(1), value);
     else return console.error(`${is[0]} is undefined property`)
