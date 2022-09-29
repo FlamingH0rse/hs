@@ -28,6 +28,7 @@ console.log(codeblocks)
 
 //prolly will go in another file
 let memory = {}
+memory.variables = {}
 
 for (let block in codeblocks){
     let blocktxt = codeblocks[block].str
@@ -52,7 +53,10 @@ for (let block in codeblocks){
         let datatype = validDataTypes.get(datatypeSym)
         
         if (datatype == 'string') value = value.toString()
-        if (datatype == 'number') value = Number(value)
+        if (datatype == 'number') {
+            value = Number(value)
+            if (isNaN(value)) return console.error('datatype error')
+        }
         if (datatype == 'boolean') {
             if (value == '0' || value == 'false') value = false
             if (value == '1' || value == 'true') value = true
@@ -70,7 +74,10 @@ for (let block in codeblocks){
             })
             value = obj
         }
-        memory[varName] = value
+        memory.variables[varName] = value
+    }
+    else if (codeblocks[block].type == 'editval') {
+        
     }
 }
 console.log(memory)
