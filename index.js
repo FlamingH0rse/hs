@@ -3,7 +3,7 @@ let strs = str.split('$/')
 
 strs.forEach((s, i) => strs[i] = i==strs.length-1?strs[i]:strs[i] + "$")
 
-const validBlockTypes = ['createvar','editval', 'root']
+const validBlockTypes = ['createvar','editval','loop', 'root']
 let codeblocks = []
 
 for (let line in strs) {
