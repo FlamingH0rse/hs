@@ -64,10 +64,13 @@ for (let block in codeblocks){
             value.split(',').forEach(e => {
                 if(e.includes('-')) {
                     let key = e.split('-')[0]
-                    let value = e.split('-')[1]
-                    obj[key] = value
+                    let val = e.split('-')[1]
+                    obj[key] = val
                 }
             })
+            value = obj
         }
+        memory[varName] = value
     }
 }
+console.log(memory)
