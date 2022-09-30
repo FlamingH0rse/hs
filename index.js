@@ -1,35 +1,41 @@
-let str = "$[createvar] name : flaming < \"\"$/\n$[createvar] age : 17 < 09$/\n$[createvar] age : >name< + >age< < \"\" $"
+let str = "$[createvar] name : flaming < \"\"$/\n$[createvar] age : 17 < 09$/\n$[root] => my name: >name<\nmy age: >age< $"
 let strs = str.split('$/')
 
-strs.forEach((s, i) => strs[i] = i==strs.length-1?strs[i]:strs[i] + "$")
+function breakCode (strs) {
+    strs.forEach((s, i) => strs[i] = i==strs.length-1?strs[i]:strs[i] + "$")
 
-const validBlockTypes = ['createvar','editval','loop', 'root']
-let codeblocks = []
+    const validBlockTypes = ['createvar','editval','loop', 'root']
+    let codeblocks = []
 
-for (let line in strs) {
-    let blocktxt = strs[line].substring(
-        strs[line].indexOf("$") + 1, 
-        strs[line].lastIndexOf("$")
-    )
+    for (let line in strs) {
+        let blocktxt = strs[line].substring(
+            strs[line].indexOf("$") + 1, 
+            strs[line].lastIndexOf("$")
+        )
     
-    let blocktype = blocktxt.substring(
-        blocktxt.indexOf("[") + 1,
-        blocktxt.indexOf("]")
-    )
+        let blocktype = blocktxt.substring(
+            blocktxt.indexOf("[") + 1,
+            blocktxt.indexOf("]")
+        )
     
-    if (!validBlockTypes.includes(blocktype)) return console.error('noob')//console.error
-    let code = {
-        str: blocktxt.replace(/\[.*?\]/, '').trim() + ';',
-        type: blocktype
+        if (!validBlockTypes.includes(blocktype)) return console.error('noob')//console.error
+        let code = {
+            str: blocktxt.replace(/\[.*?\]/, '').trim() + ';',
+            type: blocktype
+        }
+        codeblocks.push(code)
     }
-    codeblocks.push(code)
+return codeblocks
 }
-console.log(codeblocks)
 
 //prolly will go in another file
 let memory = {}
 memory.variables = {}
 
+interp(breakCode(strs))
+
+function interp (codeblocks) {
+    
 for (let block in codeblocks){
     let blocktxt = codeblocks[block].str
         
@@ -60,7 +66,16 @@ for (let block in codeblocks){
         varPath = varName.split('->').map(e => { return e.trim() })
         
         pathIndex(memory.variables, varPath, value)
+    } else if (codeblocks[block].type == 'loop') {
+        let validLoopSym = ['#', '@']
+    } else if (codeblocks[block].type == 'root') {
+        if (blocktxt.startsWith('=>')) {
+            let rawVal = blocktxt.slice(2, -1).trim()
+            let logVal = dataParse(rawVal, `""`)
+            console.log(logVal)
+        }
     }
+}
 }
 console.log(memory)
 
