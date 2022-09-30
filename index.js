@@ -35,7 +35,7 @@ for (let block in codeblocks){
         
     let datatypeSym = blocktxt.substring(
         blocktxt.lastIndexOf("<") + 1,
-            blocktxt.lastIndexOf(";")
+        blocktxt.lastIndexOf(";")
     ).trim()
     let decl = blocktxt.slice(0, blocktxt.lastIndexOf('<'))
     
@@ -72,7 +72,20 @@ function dataParse (value, sym) {
         validDataTypesSym.forEach((sym, i) => validDataTypes.set(sym, validDataTypesStr[i]))
         
     let datatype = validDataTypes.get(sym)
-    if (!validDataTypesSym.includes(sym)) return console.error('wrong datatype lol')
+    if (!validDataTypesSym.includes(sym)) return console.error('invalid datatype')
+    
+    if (value.includes('*')) {
+        let varName = value.substring(
+            value.indexOf(">") + 1,
+            value.indexOf("<")
+        ).trim()
+        
+        if (memory.variables[varName] == undefined) return console.error(`${varName} is undefined`)
+        
+        let newVal = value.replace(/\>.*?\</, memory.variables[varName])
+        
+        return dataParse(newVal, sym)
+    }
     let parse
     if (datatype == 'string') parse = value.toString()
     if (datatype == 'number') {
