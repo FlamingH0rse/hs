@@ -1,4 +1,4 @@
-let str = "$[createvar] name : flaming < \"\"$/\n$[editval] name ; chronny < \"\" $"
+let str = "$[createvar] name : flaming < \"\"$/\n$[createvar] age : 17 < 09$/\n$[createvar] age : >name< + >age< < \"\" $"
 let strs = str.split('$/')
 
 strs.forEach((s, i) => strs[i] = i==strs.length-1?strs[i]:strs[i] + "$")
@@ -74,7 +74,7 @@ function dataParse (value, sym) {
     let datatype = validDataTypes.get(sym)
     if (!validDataTypesSym.includes(sym)) return console.error('invalid datatype')
     
-    if (value.includes('*')) {
+    if (value.includes('>') && value.includes('<')) {
         let varName = value.substring(
             value.indexOf(">") + 1,
             value.indexOf("<")
