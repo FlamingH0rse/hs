@@ -89,7 +89,6 @@ function interp(codeblocks) {
             let validLoopSym = ['#', '@']
         } else if (codeblocks[block].type == 'root') {
             let rawVal = blocktxt.slice(2, -1).trim()
-
             if (blocktxt.startsWith('->')) {
                 let [parse] = dataParse(rawVal, `""`)
                 console.log(parse)
@@ -101,7 +100,7 @@ function interp(codeblocks) {
             }
         }
     }
-    console.log(memory)
+    //console.log(memory)
 }
 
 function dataParse(value, sym) {
@@ -114,7 +113,7 @@ function dataParse(value, sym) {
     let datatype = validDataTypes.get(sym)
     if (!validDataTypesSym.includes(sym)) throw new Error('invalid datatype')
 
-    if (value.includes('>') && value.includes('<')) {
+    if (value.includes('>') && value.includes('<') && datatype != 'function') {
         let varName = value.substring(
             value.indexOf(">") + 1,
             value.indexOf("<")
