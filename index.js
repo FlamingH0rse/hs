@@ -154,7 +154,7 @@ function dataParse(value, sym) {
 }
 
 function pathIndex(obj, is, value) {
-    console.log(obj)
+    //console.log(obj)
     if (is.length == 0) return obj
     if (obj[is[0]] !== undefined || obj.value[is[0]] !== undefined) pathIndex(obj[is[0]] || obj.value[is[0]], is.slice(1), value);
     else throw new Error(`${is[0]} is undefined property`)
