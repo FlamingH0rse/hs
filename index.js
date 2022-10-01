@@ -1,11 +1,29 @@
 const fs = require('fs')
-let filepath = './index.txt'
-let codetxt = fs.readFileSync(filepath, 'utf-8')
-let strs = codetxt.split('$/')
+const readline = require('readline')
+
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout, prompt: '' })
+console.log('Welcome to H0rseScript v1.0.')
+console.log('Type "hs <file_path>" to run it.')
+rl.on('line', input => {
+    input = input.trim()
+    if (input == 'exit') rl.close()
+    if (!input.startsWith('hs')) return console.log(`-> ${input.split(' ')[0]} is not recognized as a command`)
+    if (!input.split(' ')[1]) return console.log('That\'s me!')
+    let inPath = input.split(' ')[1]
+    if (inPath == '.') inPath = 'index'
+    if (!inPath.endsWith('.h0s')) inPath += '.hs'
+    if (!fs.existsSync(inPath)) return console.log(`->Cannot find the file ${inPath}`)
+    let filepath = `./${inPath}`
+    let codetxt = fs.readFileSync(filepath, 'utf-8')
+    let strs = codetxt.split('$/')
+    rl.close()
+    console.log('\x1b[31m', '----------------Running your file----------------', '\x1b[0m')
+    interp(breakCode(strs))
+})
 
 function breakCode(strs) {
     strs.forEach((s, i) => strs[i] = i == strs.length - 1 ? strs[i] : strs[i] + "$")
-
+    if (strs[strs.length-1] == '') strs.pop()
     const validBlockTypes = ['createvar', 'editval', 'loop', 'root']
     let codeblocks = []
     for (let line in strs) {
@@ -32,8 +50,6 @@ function breakCode(strs) {
 //prolly will go in another file
 let memory = {}
 memory.variables = {}
-
-interp(breakCode(strs))
 
 function interp(codeblocks) {
     for (let block in codeblocks) {
@@ -70,7 +86,7 @@ function interp(codeblocks) {
             let validLoopSym = ['#', '@']
         } else if (codeblocks[block].type == 'root') {
             let rawVal = blocktxt.slice(2, -1).trim()
-            
+
             if (blocktxt.startsWith('->')) {
                 let [parse] = dataParse(rawVal, `""`)
                 console.log(parse)

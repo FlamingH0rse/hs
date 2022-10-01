@@ -1,8 +1,0 @@
-$[createvar] name : flaming < ""$/
-$[createvar] age : 17 < 09$/
-$[createvar] myfunc :
-    $[root] -> lol $\
-    $[root] => myfunc$
-< (=>) $/
-
-$[root] => myfunc$
