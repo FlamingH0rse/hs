@@ -80,11 +80,11 @@ function interp(codeblocks) {
             let [parseValue, type] = dataParse(value, datatypeSym)
 
             varPath = varName.split('->').map(e => { return e.trim() })
-            valuePath = value.split('->').map(e => { return e.trim() })
+            //valuePath = value.split('->').map(e => { return e.trim() })
 
-            //pathIndex(memory.variables, varPath, [parseValue, type])
-            let loser = pathIndex(memory.variables, valuePath)
-            console.log(loser)
+            pathIndex(memory.variables, varPath, [parseValue, type])
+            //let loser = pathIndex(memory.variables, valuePath)
+            //console.log(loser)
         } else if (codeblocks[block].type == 'loop') {
             let validLoopSym = ['#', '@']
         } else if (codeblocks[block].type == 'root') {
