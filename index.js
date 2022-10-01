@@ -23,7 +23,7 @@ rl.on('line', input => {
 
 function breakCode(strs) {
     strs.forEach((s, i) => strs[i] = i == strs.length - 1 ? strs[i] : strs[i] + "$")
-    if (strs[strs.length-1] == '') strs.pop()
+    if (strs[strs.length - 1] == '') strs.pop()
     const validBlockTypes = ['createvar', 'editval', 'loop', 'root']
     let codeblocks = []
     for (let line in strs) {
@@ -80,8 +80,11 @@ function interp(codeblocks) {
             let [parseValue, type] = dataParse(value, datatypeSym)
 
             varPath = varName.split('->').map(e => { return e.trim() })
+            valuePath = value.split('->').map(e => { return e.trim() })
 
-            pathIndex(memory.variables, varPath, [parseValue, type])
+            //pathIndex(memory.variables, varPath, [parseValue, type])
+            let loser = pathIndex(memory.variables, valuePath)
+            console.log(loser)
         } else if (codeblocks[block].type == 'loop') {
             let validLoopSym = ['#', '@']
         } else if (codeblocks[block].type == 'root') {
@@ -98,8 +101,8 @@ function interp(codeblocks) {
             }
         }
     }
+    console.log(memory)
 }
-//console.log(memory)
 
 function dataParse(value, sym) {
     const validDataTypesSym = ['\"\"', '09', '01', '[]', '{}', '(=>)']
@@ -151,8 +154,9 @@ function dataParse(value, sym) {
 }
 
 function pathIndex(obj, is, value) {
-    if (is.length == 0) return
-    if (obj[is[0]] !== undefined) pathIndex(obj[is[0]], is.slice(1), value);
+    console.log(obj)
+    if (is.length == 0) return obj
+    if (obj[is[0]] !== undefined || obj.value[is[0]] !== undefined) pathIndex(obj[is[0]] || obj.value[is[0]], is.slice(1), value);
     else throw new Error(`${is[0]} is undefined property`)
-    if (is.length == 1) return obj[is[0]] = { value: value[0], type: value[1] };
+    if (is.length == 1 && value !== undefined) return obj[is[0]] = { value: value[0], type: value[1] };
 }
