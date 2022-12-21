@@ -1,3 +1,5 @@
+mod commands;
+
 use std::{env, io::Write};
 
 fn main() {
@@ -10,14 +12,19 @@ fn main() {
         println!("{args}");
     } else {
         // If there are no arguments specified open the program instead (Similar to Python ande Node.js)
-        println!("Welcome to H0rseScript v1.0.");
+        println!("Welcome to H0rseScript v0.69");
         println!("Type \"hs <file_name>\" to run it.");
        
         loop {
+            let mut input = String::new();
             print!(">> "); // fancy design
             std::io::stdout().flush().unwrap(); // Flush the buffer (idk what exactly is this for)
-            let mut input = String::new();
-            std::io::stdin().read_line(&mut input).expect("nerd u suck");
+            std::io::stdin().read_line(&mut input).expect("err");
+            
+            match input.as_str().trim() {
+                "help" => commands::help(),
+                _ => println!("Unknown Command"),
+            } 
         }
     }
 }
