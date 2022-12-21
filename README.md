@@ -52,11 +52,3 @@ The following data types are available in h0rsescript
 | `String`  | ->     |
 | `Integer` | =>     |
 | `Array`   | >>     |
-
-
-
-
-
-
-
-but lets not talk here lets push this now men
