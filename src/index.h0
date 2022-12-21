@@ -1,0 +1,162 @@
+okok so as i was explaining
+
+lets say
+to allocate memory
+
+ROOT.MEMORY.CREATE=variables(500) //bytes <--- see here men
+
+ROOT.OBJECTS.CREATE=var(name[variables] -> "Flaming")
+
+okok
+u can even specify how much space a certain var takes
+ROOT.OBJECTS.CREATE=var(name[variables;100] -> "Flaming")
+
+
+so the "name" variable can only use upto 100 bytes of that space
+
+not the entire but
+
+ROOT.MEMORY is the entire programs memory <--- this is wat i meant men
+.CREATE is a function to create/allocate some memory to something
+
+get it?
+like u could do
+[000000000000000000000000000000000000000000000000000000000]
+ROOT.MEMORY.CREATE=variables(500)
+ROOT.MEMORY.CREATE=objects(500)
+ROOT.MEMORY.CREATE=files(500)
+ROOT.MEMORY.CREATE=cacheorwtvruwannanameit(500)
+
+[00[objects]00[cacheorwtvr]00[files]0000000[variables]0000]
+
+
+then 
+ROOT.OBJECTS.CREATE=var(name[porn;100] -> "Flaming") <-- is this valid?
+
+ROOT.MEMORY.CREATE=porn(500) // creates some free memory that can be used
+
+ROOT.OBJECTS.CREATE=var(name[variables;100] -> "Flaming")
+
+ROOT.MEMORY.CREATE=porn(500) // creates some free memory that can be used
+ROOT.MEMORY.CREATE=variables(500) // creates some free memory that can be used
+
+ROOT.OBJECTS.CREATE=var(name[variables;100] -> "Flaming") // variables partition has 400bits left
+ROOT.OBJECTS.CREATE=var(name[porn;500] -> "Flaming")      // porn partition has 0 b left
+ROOT.OBJECTS.CREATE=var(name[variables;400] -> "Flaming") // variables partition has 0 b left 
+ROOT.OBJECTS.CREATE=var(name[porn;100] -> "Flaming")      // the program shud crash here cuz porn was already full it cant store anything else
+
+You can even name your block (Target and Code)
+
+(name_create)ROOT.OBJECTS.CREATE=var(name[porn;100] -> "Flaming")
+
+access this elsewhere using $(name_create)
+
+ok so obv each object will have its properties and functions
+
+ROOT
+    MEMORY
+        **PROPERTIES**
+        MAXSIZE (Int)
+        LIST (Array)
+
+        **FUNCTIONS**
+        CREATE
+        DELETE
+    DATATYPES
+        INT
+            **PROPERTIES**
+            SIZE
+            **FUNCTIONS**
+            TOSTRING
+            TOBINARY
+        STRING
+            **PROPERTIES**
+            SIZE
+            **FUNCTIONS**
+            TOINT
+            TOARRAY (basically like .split() in js)
+            REPLACE
+            INDEX (returns the index of a certain character)
+            SWITCHCASE (turns AbCdEfGh to aBcDeFgH, switches the case of each character)
+        ARRAY
+            **PROPERTIES**
+            SIZE
+            COUNT (no. of items in the array)
+            **FUNCTIONS**
+            TOSTRING (basically like .join() in js)
+            SET
+            GET
+            
+
+// creates some free memory that can be used
+ROOT.MEMORY.CREATE=variables(500) 
+
+// creates variable called "name" in the variables partition
+ROOT.OBJECTS.CREATE=var(name[variables;100] -> "Flaming")
+
+// get the value of the variable from memory and assign the code block a value as "the_variable_name"
+(the_variable_name)ROOT.MEMORY.LIST.GET=name
+
+// access the value by calling the codeblock using the name of the codeblock "the_variable_name"
+ROOT.CONSOLE.LOG=$(the_variable_name)   //the CONSOLE.LOG is temp ill prolly change name 
+
+ok so basically
+u wanna access a variable u need to first get it from the memory
+
+(the_name)ROOT.MEMORY.LIST.GET=name (returns "Flaming")
+
+so this codeblock stores that value
+but u wanna access this codeblock elsewhere
+
+u can use this
+
+ROOT.CONSOLE.LOG=(ROOT.MEMORY.LIST.GET=name)
+
+so instead u can do 
+ROOT.CONSOLE.LOG=$(the_name)
+
+
+lets say there r multiple variables created
+
+
+
+(the_name)ROOT.MEMORY.LIST.GET=name (returns "Flaming")
+(the_age)ROOT.MEMORY.LIST.GET=age (returns 17) w
+(the_height)ROOT.MEMORY.LIST.GET=height (returns 871287 idk)
+
+ROOT.CONSOLE.LOG="My name is $(the_name) and my age is $(the_age)"
+ROOT.CONSOLE.LOG="Im $(the_height)m tall"
+
+u saY??
+i already explained my idea upto u to improve on it men
+idiot but we need to make it better??
+no i was brbing for 1 secc
+
+
+we follow that then
+
+w did u lagged AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
