@@ -12,10 +12,13 @@ fn main() {
     if let Some(args) = cmd_args.next() {
         // The cmd_args[0] contains the file location of the program itself
         
-        let file = fs::read_to_string(args)
-            .expect("ERR: FILE DOES NOT EXIST");
+        let file = fs::read_to_string(args);
 
-        println!("{}", file);
+        match file {
+            Ok(f) => println!("{}", f),
+            _ => eprintln!("ERROR: Invalid file\\File not found"),
+        }
+        
     } else {
         // If there are no arguments specified open the program instead (Similar to Python ande Node.js)
         print!("\x1B[2J\x1B[1;1H");
