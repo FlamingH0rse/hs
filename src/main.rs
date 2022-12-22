@@ -4,6 +4,10 @@ mod messages;
 
 use std::{env, fs, io::Write};
 
+extern "C" {
+    
+}
+
 fn main() {
     let mut cmd_args= env::args();
 
