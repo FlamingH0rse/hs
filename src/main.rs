@@ -5,7 +5,7 @@ mod messages;
 use std::{env, fs, io::Write};
 
 extern "C" {
-    
+    pub fn handle_signal();
 }
 
 fn main() {
@@ -30,6 +30,7 @@ fn main() {
         println!("Type \"hs <file_name>\" to run it.");
        
         loop {
+            unsafe { handle_signal() }
             let mut input = String::new();
             print!(">> "); // fancy design
             std::io::stdout().flush().unwrap(); // Flush the buffer (idk what exactly is this for)
