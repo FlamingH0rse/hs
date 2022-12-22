@@ -1,4 +1,5 @@
 mod commands;
+mod interpreter;
 
 use std::{env, io::Write};
 
