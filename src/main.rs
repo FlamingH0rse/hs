@@ -2,31 +2,22 @@ mod commands;
 mod interpreter;
 mod messages;
 
-use std::{env, fs, io::Write, process::Command};
+use std::{env, fs, io::Write};
 
 extern "C" {
     pub fn handle_signal();
 }
 
-fn run_nodejs(_file: String) {
-    Command::new("node")
-        .arg("./nodejs/index.js")
-        .spawn()
-        .expect("Loser Error");
-}
-
 fn main() {
     let mut cmd_args= env::args();
-
     cmd_args.next();
 
     if let Some(args) = cmd_args.next() {
         // The cmd_args[0] contains the file location of the program itself
-        
         let file = fs::read_to_string(args);
 
         match file {
-            Ok(f) => run_nodejs(f),
+            Ok(f) => interpreter::run_nodejs(f),
             _ => eprintln!("ERROR: Invalid file\\File not found"),
         }
         
