@@ -18,7 +18,7 @@ fn main() {
         println!("{}", file);
     } else {
         // If there are no arguments specified open the program instead (Similar to Python ande Node.js)
-        print! ("\x1B[2J\x1B[1;1H");
+        print!("\x1B[2J\x1B[1;1H");
         println!("Welcome to H0rseScript v0.69");
         println!("Type \"hs <file_name>\" to run it.");
        
