@@ -13,10 +13,6 @@ fn run_nodejs(_file: String) {
         .arg("./nodejs/index.js")
         .spawn()
         .expect("Loser Error");
-    
-    // println!("{}", the_command.status);
-    // println!("{:#?}", the_command.stdout);
-    // println!("{:#?}", the_command.stderr);
 }
 
 fn main() {
