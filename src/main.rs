@@ -28,7 +28,7 @@ fn main() {
         print!("\x1B[2J\x1B[1;1H");
         println!("Welcome to H0rseScript v0.69");
         println!("Type \"hs <file_name>\" to run it.");
-       
+        
         loop {
             unsafe { handle_signal() }
             let mut input = String::new();

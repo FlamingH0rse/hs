@@ -10,7 +10,6 @@ void receiver(int num) {
     if (how_many_times == 2) {
         exit(1);
     }
-
     printf("(Press it again to Exit the Application)\n");
 }
 
