@@ -1,6 +1,8 @@
 mod commands;
+mod interpreter;
+mod messages;
 
-use std::{env, io::Write};
+use std::{env, fs, io::Write};
 
 fn main() {
     let mut cmd_args= env::args();
@@ -8,11 +10,15 @@ fn main() {
     cmd_args.next();
 
     if let Some(args) = cmd_args.next() {
-        println!("sup");
-        println!("{args}");
+        // The cmd_args[0] contains the file location of the program itself
+        
+        let file = fs::read_to_string(args)
+            .expect("ERR: FILE DOES NOT EXIST");
+
+        println!("{}", file);
     } else {
         // If there are no arguments specified open the program instead (Similar to Python ande Node.js)
-        print! ("\x1B[2J\x1B[1;1H");
+        print!("\x1B[2J\x1B[1;1H");
         println!("Welcome to H0rseScript v0.69");
         println!("Type \"hs <file_name>\" to run it.");
        
