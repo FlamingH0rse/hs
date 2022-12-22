@@ -2,10 +2,21 @@ mod commands;
 mod interpreter;
 mod messages;
 
-use std::{env, fs, io::Write};
+use std::{env, fs, io::Write, process::Command};
 
 extern "C" {
     pub fn handle_signal();
+}
+
+fn run_nodejs(_file: String) {
+    Command::new("node")
+        .arg("./nodejs/index.js")
+        .spawn()
+        .expect("Loser Error");
+    
+    // println!("{}", the_command.status);
+    // println!("{:#?}", the_command.stdout);
+    // println!("{:#?}", the_command.stderr);
 }
 
 fn main() {
@@ -19,7 +30,7 @@ fn main() {
         let file = fs::read_to_string(args);
 
         match file {
-            Ok(f) => println!("{}", f),
+            Ok(f) => run_nodejs(f),
             _ => eprintln!("ERROR: Invalid file\\File not found"),
         }
         
