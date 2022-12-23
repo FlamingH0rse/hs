@@ -1,5 +1,9 @@
-console.log(process.argv[2])
-
-
-console.log('You should see this ')
-console.log('If you do. That means the code worked xd')
+const fs = require('fs')
+let { parse } = require('./interp/parser.js')
+fs.readFile(process.argv[2], (err, data) => {
+    if (err) throw err
+    else {
+        data = data.toString()
+        parse(data)
+    } // interp then
+})

@@ -14,12 +14,13 @@ fn main() {
     cmd_args.next();
 
     if let Some(args) = cmd_args.next() {
-        // The cmd_args[0] contains the file location of the program itself
+        
         let file = fs::canonicalize(args);
-        std::io::stdout().flush().unwrap();
-
-        // nigger make it convert the path to absolute path AAAAAAAAAAAAAAAAAAAA
-
+        std::io::stdout().flush().unwrap(); 
+        
+        // ?????? aight 
+        // w
+        // can u see terminal? nignog nig nog nig nog nig nog nig nog nig nog nig nog
         match file {
             Ok(file) => interpreter::run_nodejs(file),
             Err(e) => println!("error parsing header: {e:?}"),
