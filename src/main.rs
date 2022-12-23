@@ -2,8 +2,7 @@ mod commands;
 mod interpreter;
 mod messages;
 
-use std::fs;
-use std::{env, io::Write};
+use std::{fs, env, io::Write};
 
 extern "C" {
     pub fn handle_signal();
@@ -18,9 +17,6 @@ fn main() {
         let file = fs::canonicalize(args);
         std::io::stdout().flush().unwrap(); 
         
-        // ?????? aight 
-        // w
-        // can u see terminal? nignog nig nog nig nog nig nog nig nog nig nog nig nog
         match file {
             Ok(file) => interpreter::run_nodejs(file),
             Err(e) => println!("error parsing header: {e:?}"),
