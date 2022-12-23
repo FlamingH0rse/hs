@@ -15,7 +15,7 @@ fn main() {
 
     if let Some(args) = cmd_args.next() {
         // The cmd_args[0] contains the file location of the program itself
-        let file = fs::read_to_string(args);
+        let file = fs::canonicalize(args);
         std::io::stdout().flush().unwrap();
 
         // nigger make it convert the path to absolute path AAAAAAAAAAAAAAAAAAAA
