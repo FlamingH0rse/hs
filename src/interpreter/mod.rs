@@ -7,5 +7,5 @@ pub fn run_nodejs(_file: String) {
         .arg(_file)
         .spawn()
         .unwrap();
-    let _result = child.wait().unwrap();
+    child.wait().unwrap();
 }
