@@ -2,7 +2,6 @@ mod commands;
 mod interpreter;
 mod messages;
 
-
 use std::fs;
 use std::{env, io::Write};
 
