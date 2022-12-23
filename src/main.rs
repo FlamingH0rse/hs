@@ -19,10 +19,10 @@ fn main() {
         std::io::stdout().flush().unwrap();
 
         // nigger make it convert the path to absolute path AAAAAAAAAAAAAAAAAAAA
-        
+
         match file {
-        Ok(file) => interpreter::run_nodejs(file),
-        Err(e) => println!("error parsing header: {e:?}"),
+            Ok(file) => interpreter::run_nodejs(file),
+            Err(e) => println!("error parsing header: {e:?}"),
         }
     } else {
         println!("Welcome to H0rseScript v0.69");
