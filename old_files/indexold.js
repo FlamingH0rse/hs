@@ -16,9 +16,11 @@ rl.on('line', input => {
     let filepath = `./${inPath}`
     let codetxt = fs.readFileSync(filepath, 'utf-8')
     let strs = codetxt.split('$/')
-    rl.close()
-    console.log('\x1b[31m', '----------------Running your file----------------', '\x1b[0m')
+    console.log('\x1b[31m', '---------------- Running your file ----------------', '\x1b[0m')
+    let timeStart = Date.now()
     interp(breakCode(strs))
+    let timeTaken = (Date.now() - timeStart) / 1000
+    console.log('\x1b[31m', `------------- Executed file in ${timeTaken}s -------------`, '\x1b[0m')
 })
 
 function breakCode(strs) {
@@ -36,8 +38,8 @@ function breakCode(strs) {
             blocktxt.indexOf("[") + 1,
             blocktxt.indexOf("]")
         )
-
-        if (!validBlockTypes.includes(blocktype)) throw new Error('noob')//throw new Error
+	let currentLine = strs.join('$/').split('\n').indexOf(strs[line])
+        if (!validBlockTypes.includes(blocktype)) throw new Error(`Invalid block at line ${currentLine}`)//throw new Error
         let code = {
             str: blocktxt.replace(/\[.*?\]/, '').trim() + ';',
             type: blocktype
