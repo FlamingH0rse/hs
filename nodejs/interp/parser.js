@@ -9,7 +9,7 @@ module.exports = {
             let [target, ...code] = line.split('=')
             target = target.trim(); code = code.join('=').trim();
             if (target) parsedJson[index] = { target, code } 
-// oh ok sorry imma follow
+
         });
         console.log(parsedJson)
     }
